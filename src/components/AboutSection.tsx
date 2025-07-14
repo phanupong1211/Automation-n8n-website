@@ -44,39 +44,45 @@ export function AboutSection() {
 </Link>
         </motion.div>
 
-        {/* Right images collage */}
-        <motion.div
-          className="relative w-full h-[400px] flex items-center justify-center"
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          {/* Background image */}
-          <div className="relative animate-fade-in [animation-delay:300ms]">
-            <div className="aspect-[4/3] rounded-2xl overflow-hidden">
-              <Image 
-                src="images/sv4.jpeg"
-                alt="Seaside view" 
-                className="w-full h-150 object-cover"
-              />
-            </div>
-            <div className="absolute -bottom-5 -left-10 w-1/2 rounded-2xl overflow-hidden shadow-x1">
-              <Image 
-                src="images/369.jpg"
-                alt="Luxury apartment interior" 
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="absolute -top-5 -right-20 w-1/2 rounded-2xl overflow-hidden shadow-xl">
-              <Image 
-                src="images/cv4.jpeg"
-                alt="Pool view" 
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </div>
-        </motion.div>
+// ... (โค้ดด้านบน)
+
+<motion.div>
+  {/* ... (โค้ดอื่นๆ) */}
+  <div className="relative animate-fade-in [animation-delay:300ms]">
+    <div className="aspect-[4/3] rounded-2xl overflow-hidden">
+      <Image
+        // แก้ไข src: ต้องมี / นำหน้า
+        src="/images/sv4.jpeg"
+        alt="Seaside view"
+        className="w-full h-150 object-cover"
+        width={600} // *** เพิ่ม width และ height ที่นี่ (กำหนดตามขนาดที่เหมาะสม) ***
+        height={450} // 450 = 600 * (3/4) เพื่อรักษาสัดส่วน 4/3
+      />
+    </div>
+    <div className="absolute -bottom-5 -left-10 w-1/2 rounded-2xl overflow-hidden shadow-xl">
+      <Image
+        // แก้ไข src: ต้องมี / นำหน้า
+        src="/images/369.jpeg"
+        alt="Luxury apartment Interior"
+        className="w-full h-full object-cover"
+        width={400} // *** เพิ่ม width และ height ที่นี่ (กำหนดตามขนาดที่เหมาะสม) ***
+        height={300} // เช่น 400 * (3/4)
+      />
+    </div>
+    <div className="absolute -top-5 -right-20 w-1/2 rounded-2xl overflow-hidden shadow-xl">
+      <Image
+        // แก้ไข src: ต้องมี / นำหน้า
+        src="/images/cv4.jpeg"
+        alt="Pool view"
+        className="w-full h-full object-cover"
+        width={400} // *** เพิ่ม width และ height ที่นี่ (กำหนดตามขนาดที่เหมาะสม) ***
+        height={300} // เช่น 400 * (3/4)
+      />
+    </div>
+  </div>
+</motion.div>
+
+
       </div>
     </section>
   );

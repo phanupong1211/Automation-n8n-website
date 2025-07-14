@@ -44,7 +44,7 @@ export function Navigation() {
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex items-center gap-2">
             <Image
-            src="https://i.postimg.cc/HsZKGfRY/Chat-GPT-Image-Jul-4-2025-04-40-03-PM-removebg-preview.png"
+            src="/image/logo.png"
             alt="NIS Automation Logo"
             width={50}
             height={100}
