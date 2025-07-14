@@ -1,10 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ChevronDown, Play, Mail, Phone, MapPin } from "lucide-react";
+//import { ChevronDown, Play, Mail, Phone, MapPin } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
+//ลบ export
 export function HeroSection() {
   return (
     <section
@@ -128,7 +129,7 @@ export function HeroSection() {
               animate={{ y: [0, 10, 0] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
-              <ChevronDown size={32} />
+              {/*<ChevronDown size={32} /> */}
             </motion.div>
           </Link>
         </motion.div>

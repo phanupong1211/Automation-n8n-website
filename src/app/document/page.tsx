@@ -1,8 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import AffiliateCard from "@/components/AffiliateCard";
-
+import { AffiliateCard } from '../../components/AffiliateCard'; // ขึ้นไปสองระดับ (ไปยัง 'app') แล้วลงไปที่ 'components'
 const documents = [
   {
     id: "1",
@@ -25,6 +24,7 @@ const documents = [
   }
 ];
 
+//export default
 export default function DocumentPage() {
   return (
     <div className="pt-16 min-h-screen bg-gray-50 dark:bg-gray-900">

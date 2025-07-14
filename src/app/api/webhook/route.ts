@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { sendToSession } from "../sse/route";
-import { validateWebhookRequest, verifySessionToken } from "@/lib/webhook-security";
+import { sendToSession } from "@/utils/sse-helpers";
+import { validateWebhookRequest } from "@/lib/webhook-security";
 
 // Store for pending chat responses - in production, use Redis or database
 const pendingResponses = new Map<string, string>();
 
+// ต้อง export POST เพื่อให้เป็น API Route Handler
 export async function POST(request: NextRequest) {
   try {
     // Get raw body for signature verification
@@ -13,7 +14,8 @@ export async function POST(request: NextRequest) {
 
     try {
       body = JSON.parse(rawBody);
-    } catch (error) {
+    } catch (parseError) { // เปลี่ยนชื่อ error เป็น parseError เพื่อใช้งาน
+      console.error("Invalid JSON payload error:", parseError); // ใช้งาน parseError
       return NextResponse.json(
         { error: "Invalid JSON payload" },
         { status: 400 }
@@ -53,7 +55,7 @@ export async function POST(request: NextRequest) {
         { status: 401 }
       );
     }
-    console.log("Webhook received:", body);
+    console.log("Webhook received:", body); // body ถูกใช้งานแล้ว
 
     // Extract the response data from n8n
     const {
@@ -83,7 +85,7 @@ export async function POST(request: NextRequest) {
     const id = sessionId || chatId || conversationId || Date.now().toString();
     pendingResponses.set(id, responseMessage);
 
-    // Send real-time update via SSE if session exists
+    // Send real-time update via SSE if session exists (นำ block นี้กลับมา)
     if (sessionId || chatId || conversationId) {
       const sent = sendToSession(id, {
         type: 'response',
@@ -95,7 +97,7 @@ export async function POST(request: NextRequest) {
 
     // Clean up old responses (older than 5 minutes)
     const fiveMinutesAgo = Date.now() - 5 * 60 * 1000;
-    for (const [key, value] of pendingResponses.entries()) {
+    for (const key of pendingResponses.keys()) {
       if (parseInt(key) < fiveMinutesAgo) {
         pendingResponses.delete(key);
       }
@@ -107,8 +109,8 @@ export async function POST(request: NextRequest) {
       id: id
     });
 
-  } catch (error) {
-    console.error("Webhook error:", error);
+  } catch (handlerError) { // เปลี่ยนชื่อ error เป็น handlerError เพื่อใช้งาน
+    console.error("Webhook error:", handlerError); // ใช้งาน handlerError
     return NextResponse.json(
       { error: "Failed to process webhook" },
       { status: 500 }
@@ -116,9 +118,10 @@ export async function POST(request: NextRequest) {
   }
 }
 
+// ต้อง export GET เพื่อให้เป็น API Route Handler
 export async function GET(request: NextRequest) {
-  const body = await request.json();
-const sessionId = body.sessionId;
+  // ลบบรรทัดนี้: const body = await request.json();
+  // ลบบรรทัดนี้: const sessionId = body.sessionId;
 
   try {
     const { searchParams } = new URL(request.url);
@@ -131,22 +134,23 @@ const sessionId = body.sessionId;
       );
     }
 
-const responseText = "นี่คือข้อความตอบกลับจาก webhook";
+    // ลบบรรทัดนี้: const responseText = "นี่คือข้อความตอบกลับจาก webhook";
 
-const success = sendToSession(sessionId, {
-  type: "response",
-  message: responseText
-});
-
-if (!success) {
-  console.log(`[Fallback] Could not send via SSE, replying HTTP`);
-  return NextResponse.json({
-    message: responseText,
-    useSSE: false
-  });
-}
-
-
+    // ถ้าต้องการให้ GET endpoint นี้ใช้ SSE ก็ต้องนำ block นี้กลับมา
+    // หากไม่ต้องการ สามารถลบส่วนนี้ทิ้งได้
+    // ตัวอย่างการนำกลับมา:
+    // const responseText = "นี่คือข้อความตอบกลับจาก webhook"; // อาจจะต้องกำหนดค่าตรงนี้
+    // const success = sendToSession(id, { // ใช้ id แทน sessionId ที่ไม่มีแล้ว
+    //   type: "response",
+    //   message: responseText
+    // });
+    // if (!success) {
+    //   console.log(`[Fallback] Could not send via SSE, replying HTTP`);
+    //   return NextResponse.json({
+    //     message: responseText,
+    //     useSSE: false
+    //   });
+    // }
 
     const response = pendingResponses.get(id);
 
@@ -164,8 +168,8 @@ if (!success) {
       });
     }
 
-  } catch (error) {
-    console.error("Webhook GET error:", error);
+  } catch (getError) { // เปลี่ยนชื่อ error เป็น getError เพื่อใช้งาน
+    console.error("Webhook GET error:", getError); // ใช้งาน getError
     return NextResponse.json(
       { error: "Failed to retrieve response" },
       { status: 500 }
@@ -173,15 +177,18 @@ if (!success) {
   }
 }
 
-// Export the current pending responses for debugging (remove in production)
-export async function DELETE(request: NextRequest) {
+// ใน src/app/api/webhook/route.ts
+// เพิ่มคอมเมนต์นี้เหนือฟังก์ชัน DELETE
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function DELETE(_request: NextRequest) { // _request คือพารามิเตอร์ที่ถูกรับเข้ามา
   try {
     pendingResponses.clear();
     return NextResponse.json({
       success: true,
       message: "All pending responses cleared"
     });
-  } catch (error) {
+  } catch (deleteError) {
+    console.error("Webhook DELETE error:", deleteError);
     return NextResponse.json(
       { error: "Failed to clear responses" },
       { status: 500 }

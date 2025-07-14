@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import projects from "@/data/projects.json";
-import ProjectDetail from "@/components/ProjectDetail";
+import { ProjectDetail } from "@/components/ProjectDetail";
 
 type Project = {
   slug: string;
@@ -14,9 +14,10 @@ type Project = {
   results: string[];
 };
 
-export default async function ProjectPage({ params }: { params: { slug: string } }) {
-  const { slug } = await params; // หรือ
-  // const { slug } = use(params)
+// แก้ไข: params เป็น Promise<{ slug: string }> ใน Next.js 15+
+export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
+  // ต้อง await params เพราะมันเป็น Promise
+  const { slug } = await params;
 
   const project = (projects as Project[]).find((p) => p.slug === slug);
   if (!project) return notFound();
@@ -33,4 +34,15 @@ export default async function ProjectPage({ params }: { params: { slug: string }
       results={project.results}
     />
   );
+}
+
+// ถ้ามี generateMetadata ก็ต้องแก้ไขด้วย
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const project = (projects as Project[]).find((p) => p.slug === slug);
+  
+  return {
+    title: project?.name || 'Project Not Found',
+    description: project?.description || 'Project description not available',
+  };
 }

@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import AffiliateCard from "@/components/AffiliateCard";
+import { AffiliateCard } from '../../components/AffiliateCard'; // ขึ้นไปสองระดับ (ไปยัง 'app') แล้วลงไปที่ 'components'
 import Image from "next/image";
 
 //import { services } from "./services-data"; // ถ้า data คุณแยกออกไว้ (หรือจะคงเป็น array ด้านบนก็ได้)
@@ -192,6 +192,7 @@ const services = [
   }
 ];
 
+//export default
 export default function ReviewsPage() {
   const [openId, setOpenId] = useState<string | null>(null);
   const detailsRef = useRef<HTMLDivElement>(null);
@@ -274,7 +275,7 @@ export default function ReviewsPage() {
               {Array.isArray(selectedService.moreImage) && (
                 <div className="flex flex-wrap justify-center gap-4">
                   {selectedService.moreImage.map((imgSrc, imgIndex) => (
-                    <img
+                    <Image
                       key={imgIndex}
                       src={imgSrc}
                       alt={`${selectedService.title} Image ${imgIndex + 1}`}

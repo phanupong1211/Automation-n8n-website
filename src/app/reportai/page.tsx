@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Send, Bot, User, Loader2 } from "lucide-react";
+import { Send, Loader2 } from "lucide-react";
 
 interface Message {
   id: string;
@@ -11,6 +11,7 @@ interface Message {
   isLoading?: boolean;
 }
 
+//export default
 export default function ReportAIPage() {
   const [messages, setMessages] = useState<Message[]>([
     {

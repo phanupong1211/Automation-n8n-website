@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import Image from 'next/image';
 import { useRouter } from "next/navigation";
 
+//ex default
 export default function SafetyValvePage() {
   const [activeInfo, setActiveInfo] = useState<string | null>(null);
   const router = useRouter();
@@ -39,7 +40,7 @@ export default function SafetyValvePage() {
         </p>
 
         <div className="flex justify-center mb-6">
-          <img
+          <Image
             src="https://pre-vent.com/files/pre-vent/images/pre-vent/products/valve-br11-360.gif"
             alt="Safety Valve"
             className="rounded-lg shadow-lg"
@@ -88,7 +89,7 @@ export default function SafetyValvePage() {
 
         {activeInfo === "pic1" && (
         <div className="flex justify-center mb-6">
-        <img
+        <Image
           src="https://jwtech.co.th/activity/wp-content/uploads/2022/01/Control-valve-1.png"
           alt="Safety Valve"
           className="rounded-lg shadow-lg"
@@ -107,7 +108,7 @@ export default function SafetyValvePage() {
         </ol>
 
         <div className="flex justify-center mb-6">
-          <img
+          <Image
             src="https://upmation.com/wp-content/uploads/2020/09/How-Control-Valve-Positioner-Works.jpg"
             alt="Safety Valve"
             className="rounded-lg shadow-lg"
@@ -173,26 +174,20 @@ export default function SafetyValvePage() {
           </div>
         )}
 
-        <div className="fixed bottom-20 left-20 flex space-x-2 bg-gray-800 p-1 rounded-xl shadow-lg z-50 transition-opacity duration-300 hover:opacity-100 opacity-80">
-          <button
-          onClick={() => {
-            const audio = document.getElementById("explanationAudio") as HTMLAudioElement;
-            audio?.play();
-          }}
-          className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-          >
-            ▶️
-          </button>
-          <button
-          onClick={() => {
-            const audio = document.getElementById("explanationAudio") as HTMLAudioElement;
-            audio?.pause();
-          }}
-          className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-          >
-            ⏸️
-          </button>
-          </div>
+<div className="fixed bottom-20 left-20 flex space-x-2 bg-gray-800 p-1 rounded-xl shadow-lg z-50 transition-opacity duration-300 hover:opacity-100 opacity-80">
+  <button
+    onClick={playAudio} // เรียกใช้ฟังก์ชัน playAudio() โดยตรง
+    className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+  >
+    ▶️
+  </button>
+  <button
+    onClick={pauseAudio} // เรียกใช้ฟังก์ชัน pauseAudio() โดยตรง
+    className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+  >
+    ⏸️
+  </button>
+</div>
 
           <audio id="explanationAudio" src="/audio/valve.wav" preload="auto"></audio>
 

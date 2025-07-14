@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { ChatWidget } from "@/components/ChatWidget";
 
+//ลบ export
 export function ChatWidgetWrapper() {
   const pathname = usePathname();
 

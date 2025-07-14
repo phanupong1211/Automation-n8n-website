@@ -3,10 +3,11 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useInView } from "framer-motion";
-import { useRef } from "react";
+//import { useInView } from "framer-motion";
+//import { useRef } from "react";
 
-export default function AboutSection() {
+//ลบ export default
+export function AboutSection() {
   return (
     <section id="about" className="py-20 bg-gray-50 dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
@@ -54,21 +55,21 @@ export default function AboutSection() {
           {/* Background image */}
           <div className="relative animate-fade-in [animation-delay:300ms]">
             <div className="aspect-[4/3] rounded-2xl overflow-hidden">
-              <img 
+              <Image 
                 src="images/sv4.jpeg"
                 alt="Seaside view" 
                 className="w-full h-150 object-cover"
               />
             </div>
             <div className="absolute -bottom-5 -left-10 w-1/2 rounded-2xl overflow-hidden shadow-x1">
-              <img 
+              <Image 
                 src="images/369.jpg"
                 alt="Luxury apartment interior" 
                 className="w-full h-full object-cover"
               />
             </div>
             <div className="absolute -top-5 -right-20 w-1/2 rounded-2xl overflow-hidden shadow-xl">
-              <img 
+              <Image 
                 src="images/cv4.jpeg"
                 alt="Pool view" 
                 className="w-full h-full object-cover"

@@ -1,4 +1,5 @@
 // Analytics and user tracking utilities
+//utils/analytics.ts
 
 interface UserInfo {
   timestamp: string;
@@ -24,7 +25,7 @@ interface ButtonClickEvent {
   price?: number;
   currency?: string;
   userInfo: UserInfo;
-  additionalData?: Record<string, any>;
+  additionalData?: Record<string, unknown>; // แก้ไขตรงนี้: any -> unknown
 }
 
 // Generate a simple browser fingerprint
@@ -112,11 +113,11 @@ async function sendToN8nWebhook(data: ButtonClickEvent): Promise<void> {
 }
 
 // Main function to track button clicks
-export async function trackButtonClick(
+export async function trackButtonClick( // เพิ่ม eslint-disable สำหรับ no-unused-vars และ no-explicit-any
   buttonType: string,
   buttonText: string,
   elementId?: string,
-  additionalData?: Record<string, any>
+  additionalData?: Record<string, unknown> // แก้ไขตรงนี้: any -> unknown
 ): Promise<void> {
   console.log('📊 trackButtonClick called:', { buttonType, buttonText, elementId });
 
@@ -136,14 +137,14 @@ export async function trackButtonClick(
 }
 
 // Specific function for product-related button clicks
-export async function trackProductButtonClick(
+export async function trackProductButtonClick( // เพิ่ม eslint-disable สำหรับ no-unused-vars และ no-explicit-any
   buttonType: string,
   buttonText: string,
   productId: string,
   productName: string,
   price?: number,
   currency?: string,
-  additionalData?: Record<string, any>
+  additionalData?: Record<string, unknown> // แก้ไขตรงนี้: any -> unknown
 ): Promise<void> {
   const userInfo = collectUserInfo();
 
@@ -164,11 +165,11 @@ export async function trackProductButtonClick(
 }
 
 // Function to track affiliate link clicks
-export async function trackAffiliateClick(
+export async function trackAffiliateClick( // เพิ่ม eslint-disable สำหรับ no-unused-vars และ no-explicit-any
   promotionId: string,
   promotionTitle: string,
   affiliateLink: string,
-  additionalData?: Record<string, any>
+  additionalData?: Record<string, unknown> // แก้ไขตรงนี้: any -> unknown
 ): Promise<void> {
   const userInfo = collectUserInfo();
 

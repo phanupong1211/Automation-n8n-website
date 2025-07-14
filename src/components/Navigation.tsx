@@ -1,10 +1,12 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
+//ลบ export
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -41,7 +43,7 @@ export function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex items-center gap-2">
-            <img
+            <Image
             src="https://i.postimg.cc/HsZKGfRY/Chat-GPT-Image-Jul-4-2025-04-40-03-PM-removebg-preview.png"
             alt="NIS Automation Logo"
             width={50}

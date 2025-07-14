@@ -1,0 +1,22 @@
+{
+  "/_not-found/page": "/_not-found",
+  "/api/analytics/route": "/api/analytics",
+  "/api/chat/route": "/api/chat",
+  "/api/chatreport/route": "/api/chatreport",
+  "/api/n8n-response/route": "/api/n8n-response",
+  "/api/public/n8n/route": "/api/public/n8n",
+  "/api/sse/route": "/api/sse",
+  "/api/webhook/route": "/api/webhook",
+  "/favicon.ico/route": "/favicon.ico",
+  "/convalve/page": "/convalve",
+  "/document/page": "/document",
+  "/experience/page": "/experience",
+  "/flow/page": "/flow",
+  "/page": "/",
+  "/projects/[slug]/page": "/projects/[slug]",
+  "/reportai/page": "/reportai",
+  "/reviews/page": "/reviews",
+  "/safetyvalve/page": "/safetyvalve",
+  "/shop/page": "/shop",
+  "/training/page": "/training"
+}

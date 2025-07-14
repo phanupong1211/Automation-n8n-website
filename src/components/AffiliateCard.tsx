@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 
@@ -13,7 +14,8 @@ interface AffiliateCardProps {
   index: number;
 }
 
-export default function AffiliateCard({
+//export default
+export function AffiliateCard({
   title,
   description,
   image,
@@ -47,7 +49,7 @@ export default function AffiliateCard({
       className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
     >
       <div className="relative h-48 overflow-hidden">
-        <img
+        <Image
           src={image}
           alt={title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"

@@ -1,9 +1,11 @@
 //sse
-import { NextRequest } from "next/server";
+import { NextRequest } from "next/server"; // เพิ่ม NextResponse เพื่อให้ GET/POST return ได้ถูกต้อง ลบ , NextResponse
+import { sendToSession, getConnectionInfo } from "@/utils/sse-helpers"; //, broadcast
 
 // Store for SSE connections
 const connections = new Map<string, ReadableStreamDefaultController>();
 
+// GET endpoint สำหรับ SSE connection (ต้อง export)
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
@@ -33,6 +35,7 @@ export async function GET(request: NextRequest) {
             try {
               controller.close();
             } catch (e) {
+              console.error("Error closing controller:", e); // เพิ่มบรรทัดนี้
               // Connection already closed
             }
           });
@@ -60,69 +63,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// Function to send message to specific session
-export function sendToSession(sessionId: string, data: any) {
-  console.log(`[SSE] Attempting to send to session: ${sessionId}`);
-  console.log(`[SSE] Available connections:`, Array.from(connections.keys()));
-  console.log(`[SSE] Total connections: ${connections.size}`);
-
-  const controller = connections.get(sessionId);
-  if (controller) {
-    try {
-      controller.enqueue(`data: ${JSON.stringify(data)}\n\n`);
-      console.log(`[SSE] Successfully sent message to session: ${sessionId}`);
-      return true;
-    } catch (error) {
-      console.error(`[SSE] Error sending to session ${sessionId}:`, error);
-      connections.delete(sessionId);
-      return false;
-    }
-  } else {
-    console.log(`[SSE] No connection found for session: ${sessionId}`);
-    console.log(`[SSE] Searching for partial matches...`);
-
-    // Try to find partial matches in case of session ID mismatch
-    for (const [connId, controller] of connections.entries()) {
-      if (connId.includes(sessionId) || sessionId.includes(connId)) {
-        console.log(`[SSE] Found partial match: ${connId} for ${sessionId}`);
-        try {
-          controller.enqueue(`data: ${JSON.stringify(data)}\n\n`);
-          console.log(`[SSE] Successfully sent message to partial match: ${connId}`);
-          return true;
-        } catch (error) {
-          console.error(`[SSE] Error sending to partial match ${connId}:`, error);
-          connections.delete(connId);
-        }
-      }
-    }
-  }
-  return false;
-}
-
-// Function to broadcast to all connections
-export function broadcast(data: any) {
-  let sent = 0;
-  for (const [sessionId, controller] of connections.entries()) {
-    try {
-      controller.enqueue(`data: ${JSON.stringify(data)}\n\n`);
-      sent++;
-    } catch (error) {
-      console.error('Error broadcasting to session:', sessionId, error);
-      connections.delete(sessionId);
-    }
-  }
-  return sent;
-}
-
-// Function to get connection info for debugging
-export function getConnectionInfo() {
-  return {
-    totalConnections: connections.size,
-    sessionIds: Array.from(connections.keys())
-  };
-}
-
-// Add a POST endpoint for debugging SSE connections
+// POST endpoint for debugging SSE connections (ต้อง export)
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();

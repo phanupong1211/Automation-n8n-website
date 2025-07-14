@@ -12,11 +12,12 @@ interface Message {
   isLoading?: boolean;
 }
 
-// Generate unique session ID
+{/*// Generate unique session ID
 const generateSessionId = () => {
   return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-};
+};*/}
 
+//ลบ export
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [sessionId] = useState(() => {
@@ -53,24 +54,23 @@ export function ChatWidget() {
     scrollToBottom();
   }, [messages]);
 
-  // Setup SSE connection when chat opens
 useEffect(() => {
-  if (!eventSource) {
+  if (!eventSource) { // eventSource เป็น dependency ที่นี่
     console.log(`[SSE] Connecting immediately with sessionId: ${sessionId}`);
     const es = new EventSource(`/api/sse?sessionId=${sessionId}`);
 
     es.onopen = () => {
       console.log(`[SSE] Connection opened for sessionId: ${sessionId}`);
-      setConnectionStatus("connected");
+      setConnectionStatus("connected"); // setConnectionStatus เป็น dependency
     };
 
     es.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data);
         if (data.type === "connected") {
-          setConnectionStatus("connected");
+          setConnectionStatus("connected"); // setConnectionStatus เป็น dependency
         } else if (data.type === "response") {
-          setMessages(prev => {
+          setMessages(prev => { // setMessages เป็น dependency
             const filtered = prev.filter(msg => !msg.isLoading);
             return [...filtered, {
               id: Date.now().toString(),
@@ -79,7 +79,7 @@ useEffect(() => {
               timestamp: new Date(),
             }];
           });
-          setIsLoading(false);
+          setIsLoading(false); // setIsLoading เป็น dependency
         }
       } catch (err) {
         console.error("SSE parse error:", err);
@@ -88,24 +88,24 @@ useEffect(() => {
 
     es.onerror = (err) => {
       console.error("SSE error:", err);
-      setConnectionStatus("disconnected");
+      setConnectionStatus("disconnected"); // setConnectionStatus เป็น dependency
       es.close();
-      setEventSource(null);
+      setEventSource(null); // setEventSource เป็น dependency
     };
 
-    setEventSource(es);
+    setEventSource(es); // setEventSource เป็น dependency
   }
-}, [sessionId]);
+}, [sessionId, eventSource, setEventSource, setConnectionStatus, setMessages, setIsLoading]);
+// เพิ่ม dependencies ทั้งหมดที่จำเป็น
 
-
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      if (eventSource) {
-        eventSource.close();
-      }
-    };
-  }, []);
+// Cleanup on unmount
+useEffect(() => {
+  return () => {
+    if (eventSource) {
+      eventSource.close();
+    }
+  };
+}, [eventSource]); // eventSource เป็น dependency ที่นี่
 
   const sendMessage = async () => {
     if (!input.trim() || isLoading) return;

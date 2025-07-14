@@ -1,7 +1,8 @@
 
 import { NextRequest, NextResponse } from "next/server";
 
-// Simple endpoint for n8n to send responses back
+
+// Simple endpoint for n8n to send responses back ลบ ex
 export async function POST(request: NextRequest) {
   try {
     // Required API key check

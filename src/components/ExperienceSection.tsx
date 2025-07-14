@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
+//import Image from "next/image";
 
 interface ExperienceProps {
   id: string;
@@ -49,7 +49,9 @@ const experiences: ExperienceProps[] = [
   }
 ];
 
-export default function ExperienceSection() {
+
+//ลบ export default
+export function ExperienceSection() {
   return (
     <section id="experience" className="py-20 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
       <div className="max-w-7xl mx-auto px-4">

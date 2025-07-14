@@ -4,7 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 
-export default function ProjectDetail({
+//ลบ export defaut
+export function ProjectDetail({
   title,
   description,
   //category,

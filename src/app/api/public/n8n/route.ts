@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { sendToSession, getConnectionInfo } from "../../sse/route";
+import { sendToSession } from "@/utils/sse-helpers";
 
 // Completely open endpoint for n8n - no authentication required
+// ต้อง export POST เพื่อให้เป็น API Route Handler
 export async function POST(request: NextRequest) {
   try {
     console.log("=== n8n Public Endpoint Called ===");
@@ -16,9 +17,8 @@ export async function POST(request: NextRequest) {
 
     console.log("Processed response:", response);
     console.log("Session ID:", sessionId);
-    console.log("SSE Connection Info:", getConnectionInfo());
 
-    // Send the response via SSE to the chat if we have a session ID
+    // Send the response via SSE to the chat if we have a session ID (นำ block นี้กลับมา)
     if (sessionId) {
       const sent = sendToSession(sessionId, {
         type: 'response',
@@ -49,7 +49,9 @@ export async function POST(request: NextRequest) {
       console.log("❌ No session ID found in request");
     }
 
-    // Return success response (fallback)
+    // Return success response (fallback) - ควรลบโค้ดซ้ำซ้อนนี้ออก ถ้า `if (sessionId)` block ส่ง Response แล้ว
+    // แต่ถ้า `if (sessionId)` ไม่ได้ส่ง Response (เช่น sent เป็น false)
+    // หรือไม่มี sessionId เลย โค้ดนี้จะทำหน้าที่เป็น fallback
     return NextResponse.json({
       success: true,
       message: "✅ Response received successfully from n8n",
@@ -65,13 +67,13 @@ export async function POST(request: NextRequest) {
       }
     });
 
-  } catch (error) {
-    console.error("❌ n8n public endpoint error:", error);
+  } catch (handlerError) { // เปลี่ยนชื่อ error เป็น handlerError เพื่อใช้งาน
+    console.error("❌ n8n public endpoint error:", handlerError); // ใช้งาน handlerError
     return NextResponse.json(
       {
         success: false,
         error: "Failed to process n8n response",
-        details: error instanceof Error ? error.message : "Unknown error",
+        details: handlerError instanceof Error ? handlerError.message : "Unknown error",
         timestamp: new Date().toISOString()
       },
       { status: 500 }
@@ -80,6 +82,7 @@ export async function POST(request: NextRequest) {
 }
 
 // Handle OPTIONS for CORS
+// ต้อง export OPTIONS เพื่อให้เป็น API Route Handler
 export async function OPTIONS() {
   return new NextResponse(null, {
     status: 200,
@@ -92,6 +95,7 @@ export async function OPTIONS() {
 }
 
 // GET endpoint to check if the service is running
+// ต้อง export GET เพื่อให้เป็น API Route Handler
 export async function GET() {
   return NextResponse.json({
     status: "🟢 ACTIVE",

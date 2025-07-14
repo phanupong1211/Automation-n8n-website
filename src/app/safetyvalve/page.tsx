@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
+//export default
 export default function SafetyValvePage() {
   const [activeInfo, setActiveInfo] = useState<string | null>(null);
   const router = useRouter();
@@ -39,7 +40,7 @@ export default function SafetyValvePage() {
         </p>
 
         <div className="flex justify-center mb-6">
-          <img
+          <Image
             src="https://vanbidien.com/wp-content/uploads/2020/03/querulousvaluableamericanbittern-size_restricted.gif"
             alt="Safety Valve"
             className="rounded-lg shadow-lg"
@@ -85,7 +86,7 @@ export default function SafetyValvePage() {
 
         {activeInfo === "pic1" && (
         <div className="flex justify-center mb-6">
-        <img
+        <Image
           src="/images/svas.png"
           alt="Safety Valve"
           className="rounded-lg shadow-lg"
@@ -102,7 +103,7 @@ export default function SafetyValvePage() {
           <li>แรงดันลด สปริงกด Disc กลับปิดอีกครั้ง</li>
         </ol>
         <div className="flex justify-center mb-6">
-          <img
+          <Image
             src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZTdxYW5yYXdlYWg3cjNvOTByOG4zYnZ1a2d6djZzOXc2cWZ5YnN3eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/dC3A6er0VKeWVNTyaT/giphy.gif"
             alt="Safety Valve"
             className="rounded-lg shadow-lg"
@@ -164,26 +165,20 @@ export default function SafetyValvePage() {
           </div>
         )}
 
-        <div className="fixed bottom-20 left-20 flex space-x-2 bg-gray-800 p-1 rounded-xl shadow-lg z-50 transition-opacity duration-300 hover:opacity-100 opacity-80">
-          <button
-          onClick={() => {
-            const audio = document.getElementById("explanationAudio") as HTMLAudioElement;
-            audio?.play();
-          }}
-          className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-          >
-            ▶️
-          </button>
-          <button
-          onClick={() => {
-            const audio = document.getElementById("explanationAudio") as HTMLAudioElement;
-            audio?.pause();
-          }}
-          className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-          >
-            ⏸️
-          </button>
-          </div>
+<div className="fixed bottom-20 left-20 flex space-x-2 bg-gray-800 p-1 rounded-xl shadow-lg z-50 transition-opacity duration-300 hover:opacity-100 opacity-80">
+  <button
+    onClick={playAudio} // เรียกใช้ฟังก์ชัน playAudio() โดยตรง
+    className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+  >
+    ▶️
+  </button>
+  <button
+    onClick={pauseAudio} // เรียกใช้ฟังก์ชัน pauseAudio() โดยตรง
+    className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+  >
+    ⏸️
+  </button>
+</div>
 
           <audio id="explanationAudio" src="/audio/safety.wav" preload="auto"></audio>
 

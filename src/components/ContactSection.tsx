@@ -1,11 +1,13 @@
 "use client";
 
 import { Mail, Phone, MapPin, Github, Linkedin, MessageCircle } from "lucide-react";
-import { useState, useRef } from "react";
+import {  useRef } from "react"; //useState,
 import { motion, useInView } from "framer-motion";
+import Image from "next/image";
 
-export default function ContactSection() {
-  const [message, setMessage] = useState("");
+//ลบ export default
+export function ContactSection() {
+//  const [message, setMessage] = useState("");
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -26,7 +28,7 @@ export default function ContactSection() {
             Contact Us
           </h2>
           <p className="text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            We're here to help make your operations more efficient. Reach out
+            We are here to help make your operations more efficient. Reach out
             for any service inquiries or collaborations.
           </p>
         </motion.div>
@@ -98,7 +100,7 @@ export default function ContactSection() {
                   rel="noopener noreferrer"
                   className="p-2 bg-gray-100 dark:bg-gray-700 rounded-full hover:scale-105 transition"
                 >
-                  <img
+                  <Image
                     src="/icons8-line.svg"
                     alt="Line"
                     className="w-5 h-5"
