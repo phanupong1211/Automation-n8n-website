@@ -45,7 +45,7 @@ export default function SafetyValvePage() {
 
         <div className="flex justify-center mb-6">
           <Image
-            src="https://cz.all.biz/img/cz/catalog/60969.jpg"
+            src="/images/60969.jpg"
             alt="flow siemens"
             className="rounded-lg shadow-lg"
           />
@@ -160,7 +160,7 @@ export default function SafetyValvePage() {
                         </p>
         <div className="flex justify-center mb-6">
           <Image
-            src="https://cz.all.biz/img/cz/catalog/60969.jpg"
+            src="/images/60969.jpg"
             alt="flow siemens"
             className="rounded-lg shadow-lg"
           />
@@ -191,7 +191,7 @@ export default function SafetyValvePage() {
 
         <div className="flex justify-center mb-6">
           <Image
-            src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZTdxYW5yYXdlYWg3cjNvOTByOG4zYnZ1a2d6djZzOXc2cWZ5YnN3eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/dC3A6er0VKeWVNTyaT/giphy.gif"
+            src="/images/q.gif"
             alt="Safety Valve"
             className="rounded-lg shadow-lg"
           />

@@ -31,9 +31,8 @@ export async function POST(request: NextRequest) { // ทำให้เป็�
       const payload = JSON.stringify({
         message: userMessage,
         history,
-        // portfolioData ไม่มีแล้วเพราะย้ายไป
         sessionId,
-        responseUrl: `http://localhost:3001/api/webhook`,
+        responseUrl: `https://automation-n8n-website.onrender.com/api/webhook`,
         sessionToken: generateSessionToken(sessionId),
         timestamp: new Date().toISOString()
       });

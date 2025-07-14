@@ -41,7 +41,7 @@ export default function SafetyValvePage() {
 
         <div className="flex justify-center mb-6">
           <Image
-            src="https://vanbidien.com/wp-content/uploads/2020/03/querulousvaluableamericanbittern-size_restricted.gif"
+            src="/images/Picture12.gif"
             alt="Safety Valve"
             className="rounded-lg shadow-lg"
           />
@@ -104,7 +104,7 @@ export default function SafetyValvePage() {
         </ol>
         <div className="flex justify-center mb-6">
           <Image
-            src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZTdxYW5yYXdlYWg3cjNvOTByOG4zYnZ1a2d6djZzOXc2cWZ5YnN3eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/dC3A6er0VKeWVNTyaT/giphy.gif"
+            src="/images/q.gif"
             alt="Safety Valve"
             className="rounded-lg shadow-lg"
           />

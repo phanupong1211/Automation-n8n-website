@@ -41,7 +41,7 @@ export default function SafetyValvePage() {
 
         <div className="flex justify-center mb-6">
           <Image
-            src="https://pre-vent.com/files/pre-vent/images/pre-vent/products/valve-br11-360.gif"
+            src="/images/valve-br11-360.gif"
             alt="Safety Valve"
             className="rounded-lg shadow-lg"
           />
@@ -90,7 +90,7 @@ export default function SafetyValvePage() {
         {activeInfo === "pic1" && (
         <div className="flex justify-center mb-6">
         <Image
-          src="https://jwtech.co.th/activity/wp-content/uploads/2022/01/Control-valve-1.png"
+          src="/images/Control-valve-1.png"
           alt="Safety Valve"
           className="rounded-lg shadow-lg"
         />
@@ -109,7 +109,7 @@ export default function SafetyValvePage() {
 
         <div className="flex justify-center mb-6">
           <Image
-            src="https://upmation.com/wp-content/uploads/2020/09/How-Control-Valve-Positioner-Works.jpg"
+            src="/images/How-Control-Valve-Positioner-Works.jpg"
             alt="Safety Valve"
             className="rounded-lg shadow-lg"
           />
