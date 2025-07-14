@@ -1,0 +1,53 @@
+[
+  {
+    "slug": "bloom-automatic",
+    "name": "Bloom Automatic (ระบบรดน้ำต้นกล้า IoT)",
+    "description": "โครงการปรับปรุงรดน้ำต้นกล้าแบบ Remote Control",
+    "category": "IoT Solution",
+    "skill": ["LoRaWAN", "Remote Control", "Sensor"],
+    "year": "2568",
+    "image": "/images/111.png",
+    "objectives": [
+      "ลดแรงงานคนในการรดน้ำ",
+      "ควบคุมผ่านมือถือ"
+    ],
+    "results": [
+      "ลดแรงงาน 80%",
+      "เพิ่มอัตราการรอด 30%"
+    ]
+  },
+  {
+    "slug": "amr-water-meter",
+    "name": "AMR Water Meter (มิเตอร์น้ำอัตโนมัติ)",
+    "description": "พัฒนาระบบอ่านหน่วยน้ำอัตโนมัติ",
+    "category": "Smart Utility",
+    "skill": ["AMR", "Flow Measurement"],
+    "year": "2568",
+    "image": "/images/Pic6.png",
+    "objectives": [
+      "อ่านหน่วยน้ำแบบ Real-time",
+      "เก็บข้อมูลใน Dashboard"
+    ],
+    "results": [
+      "ลดเวลาการจดบันทึก",
+      "ตรวจสอบได้ทุกที่"
+    ]
+  },
+    {
+    "slug": "smart-monitoring",
+    "name": "Smart Utility Monitoring",
+    "description": "เพิ่มประสิทธิภาพในการตรวจสอบค่าอุปกรณ์วัดแบบเรียลไทม์ ลดความจำเป็นในการใช้บุคลากรออกตรวจวัดข้อมูล ณ สถานที่จริงในแต่ละวัน",
+    "category": "IoT Solution",
+    "skill": ["AMR", "LoRaWAN"],
+    "year": "2568",
+    "image": "/images/p1.png",
+    "objectives": [
+      "อ่านหน่วยน้ำแบบ Real-time",
+      "เก็บข้อมูลใน Dashboard"
+    ],
+    "results": [
+      "ลดเวลาการจดบันทึก",
+      "ตรวจสอบได้ทุกที่"
+    ]
+  }
+]
