@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
         history,
         portfolioData, // portfolioData ถูก import มาจาก chatreport-responses.ts แล้ว
         sessionId,
-        responseUrl: `http://localhost:3001/api/webhook`,
+        responseUrl: `https://automation-n8n-website.onrender.com/api/webhook`,
         sessionToken: generateSessionToken(sessionId),
         timestamp: new Date().toISOString()
       });

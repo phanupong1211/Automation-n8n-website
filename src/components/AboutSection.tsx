@@ -56,7 +56,7 @@ export function AboutSection() {
           </div>
           <div className="absolute -bottom-5 -left-10 w-1/2 rounded-2xl overflow-hidden shadow-xl">
             <Image
-              src="/images/369.jpeg"
+              src="/images/369.jpg"
               alt="Luxury apartment Interior"
               className="w-full h-full object-cover"
               width={400} // *** เพิ่ม width และ height ที่นี่ (กำหนดตามขนาดที่เหมาะสม) ***

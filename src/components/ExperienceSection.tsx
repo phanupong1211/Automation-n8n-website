@@ -35,7 +35,7 @@ const experiences: ExperienceProps[] = [
     category: "IoT Solution",
     skill: ["AMR", "Flow Measurement"],
     year: "2568",
-    image: "/images/pic6.png"
+    image: "/images/Pic6.png"
   },
   {
     id: "3",
