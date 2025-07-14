@@ -107,6 +107,7 @@ export function verifySessionToken(sessionId: string, token: string): boolean {
       Buffer.from(expectedSignature, 'hex')
     );
   } catch (error) {
+    console.error("Error verifying session token:", error);
     return false;
   }
 }

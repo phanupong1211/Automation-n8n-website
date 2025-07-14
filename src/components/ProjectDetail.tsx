@@ -7,7 +7,7 @@ import { ArrowLeft } from "lucide-react";
 export default function ProjectDetail({
   title,
   description,
-  category,
+  //category,
   skill,
   year,
   image,
