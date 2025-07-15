@@ -4,19 +4,19 @@ import Redis from 'ioredis';
 const redisUrl = process.env.REDIS_URL;
 
 if (!redisUrl) {
-  throw new Error('rediss://default:AXC4AAIjcDEyYmIyYjQwOTE5NTI0MmZmYjU4Nzc4ZGY1ZDU5MDZjNnAxMA@perfect-caiman-28856.upstash.io:6379');
+  // ข้อความ Error ที่ถูกต้องควรเป็นแบบนี้
+  throw new Error('REDIS_URL is not defined in your environment variables');
 }
 
 // สร้าง client สำหรับการ publish ข้อความ
-// เราจะใช้ client นี้ร่วมกันในหลายๆ ที่เพื่อส่งข้อความ
 const redisPublisher = new Redis(redisUrl);
 
 redisPublisher.on('connect', () => {
-  console.log('Redis publisher connected successfully.');
+  console.log('Redis publisher connected successfully.');
 });
 
-redisPublisher.on('error', (err) => {
-  console.error('Could not connect to Redis publisher:', err);
+redisPublisher.on('error', (err: Error) => { // เพิ่ม : Error เพื่อแก้ปัญหา implicit any
+  console.error('Could not connect to Redis publisher:', err);
 });
 
 export { redisPublisher };
