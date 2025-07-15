@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
 
       const signature = createSignatureHeader(payload);
 
-      const webhookResponse = await fetch("http://localhost:5678/webhook/8bdc9363-b386-44cb-a05c-cd168d0f8608", {
+      const webhookResponse = await fetch("https://ba759b84489c.ngrok-free.app/webhook/8bdc9363-b386-44cb-a05c-cd168d0f8608", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Forward to n8n webhook
-    const n8nWebhookUrl = 'http://localhost:5678/webhook-test/addcb960-afcc-4b62-8f41-105b65b53429';
+    const n8nWebhookUrl = 'https://ba759b84489c.ngrok-free.app/webhook/addcb960-afcc-4b62-8f41-105b65b53429';
 
     try {
       const response = await fetch(n8nWebhookUrl, {

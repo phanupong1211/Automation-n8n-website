@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) { // ทำให้เป็�
 
       const signature = createSignatureHeader(payload);
 
-      const webhookResponse = await fetch("http://localhost:5678/webhook/addcb960-afcc-4b62-8f41-105b65b53429", {
+      const webhookResponse = await fetch("https://ba759b84489c.ngrok-free.app/webhook/addcb960-afcc-4b62-8f41-105b65b53429", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
