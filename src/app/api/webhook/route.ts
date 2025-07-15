@@ -6,7 +6,13 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export async function POST(request: NextRequest) {
   try {
+    // --- ส่วนที่เพิ่มเข้ามาเพื่อ DEBUG ---
     const rawBody = await request.text();
+    console.log('--- Raw Body received by Next.js ---');
+    console.log(rawBody);
+    console.log('------------------------------------');
+    // --- สิ้นสุดส่วน DEBUG ---
+
     const body = JSON.parse(rawBody);
 
     const signature = request.headers.get('x-signature');
