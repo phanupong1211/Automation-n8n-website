@@ -4,7 +4,7 @@ import Redis from 'ioredis';
 const redisUrl = process.env.REDIS_URL;
 
 if (!redisUrl) {
-  throw new Error('REDIS_URL is not defined in your environment variables');
+  throw new Error('rediss://default:AXC4AAIjcDEyYmIyYjQwOTE5NTI0MmZmYjU4Nzc4ZGY1ZDU5MDZjNnAxMA@perfect-caiman-28856.upstash.io:6379');
 }
 
 // สร้าง client สำหรับการ publish ข้อความ
