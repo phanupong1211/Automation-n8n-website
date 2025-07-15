@@ -1,7 +1,7 @@
 // src/utils/chat-responses.ts
 
 // Portfolio data for the AI to reference
-const portfolioData = {
+export const portfolioData = {
   name: "์NIS Automation Service (Instrument)",
   title: "ผู้เชี่ยวชาญที่ให้บริการตรวจสอบ ซ่อมบำรุง และปรับปรุงอุปกรณ์อุตสาหกรรม",
   contact: {

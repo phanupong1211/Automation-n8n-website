@@ -22,10 +22,11 @@ export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [sessionId] = useState(() => {
   if (typeof window !== "undefined") {
-    let existing = localStorage.getItem("sessionId");
+    // ใช้ key ชื่อ "sessionId-general"
+    let existing = localStorage.getItem("sessionId-general");
     if (!existing) {
-      existing = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-      localStorage.setItem("sessionId", existing);
+      existing = `session_general_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      localStorage.setItem("sessionId-general", existing);
     }
     return existing;
   }
@@ -156,6 +157,7 @@ useEffect(() => {
           message: input,
           history: messages,
           sessionId: sessionId,
+          workflow: "team"
         }),
       });
 

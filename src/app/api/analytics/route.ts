@@ -1,3 +1,5 @@
+//analytics
+
 import { NextRequest, NextResponse } from 'next/server';
 
 //ลบ ex

@@ -24,17 +24,18 @@ export default function ReportAIPage() {
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [sessionId] = useState(() => {
-    if (typeof window !== "undefined") {
-      let existing = localStorage.getItem("sessionId");
-      if (!existing) {
-        existing = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-        localStorage.setItem("sessionId", existing);
-      }
-      return existing;
+const [sessionId] = useState(() => {
+  if (typeof window !== "undefined") {
+    // ใช้ key ชื่อ "sessionId-report"
+    let existing = localStorage.getItem("sessionId-report");
+    if (!existing) {
+      existing = `session_report_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      localStorage.setItem("sessionId-report", existing);
     }
-    return "";
-  });
+    return existing;
+  }
+  return "";
+});
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -97,7 +98,12 @@ export default function ReportAIPage() {
       const res = await fetch("/api/chatreport", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: content, history: messages, sessionId }),
+        body: JSON.stringify({
+           message: content, 
+           history: messages, 
+           sessionId,
+           workflow: "report"
+          }),
       });
       const data = await res.json();
       if (data.message && !data.useSSE) {
