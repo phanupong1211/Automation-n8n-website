@@ -1,43 +1,57 @@
-
 import { NextRequest, NextResponse } from "next/server";
+import { redisPublisher } from "@/lib/redis"; // 👈 1. นำเข้า redis publisher
 
-
-// Simple endpoint for n8n to send responses back ลบ ex
 export async function POST(request: NextRequest) {
   try {
-    // Required API key check
+    // --- ส่วนของการตรวจสอบ API Key (คงเดิม) ---
     const apiKey = request.headers.get('x-api-key');
     const expectedApiKey = 'boom-portfolio-2024';
 
     if (!apiKey || apiKey !== expectedApiKey) {
       return NextResponse.json(
-        {
-          error: "Unauthorized - API key required",
-          message: "Please include 'x-api-key: boom-portfolio-2024' in headers"
-        },
+        { error: "Unauthorized - API key required" },
         { status: 401 }
       );
     }
+    // --- สิ้นสุดการตรวจสอบ API Key ---
 
     const body = await request.json();
-    console.log("n8n response received:", body);
+    console.log("[n8n-response] Webhook received:", body);
 
-    // Extract response from various possible formats
-    const response = body.response || body.message || body.reply || body.text || "ไม่สามารถประมวลผลคำตอบได้";
+    // 👇 2. ดึง sessionId จาก body ที่ n8n ส่งกลับมา (สำคัญมาก)
+    const { sessionId } = body;
 
-    // Log the response for debugging
-    console.log("Processed response:", response);
+    if (!sessionId) {
+      console.error("[n8n-response] Error: sessionId is missing from n8n response body.");
+      return NextResponse.json(
+        { success: false, error: "sessionId is required" },
+        { status: 400 }
+      );
+    }
 
-    // Return success response
+    // ส่วนของการดึงข้อความจาก response (คงเดิม)
+    const responseMessage = body.response || body.message || body.reply || body.text || "ไม่สามารถประมวลผลคำตอบได้";
+
+    // 🚀 3. Publish ข้อความไปยัง Redis Channel
+    const channel = `sse:${sessionId}`; // สร้างชื่อ channel ให้ตรงกับ session
+    const payload = {
+      type: 'response',
+      message: responseMessage,
+    };
+
+    const subscriberCount = await redisPublisher.publish(channel, JSON.stringify(payload));
+
+    console.log(`[n8n-response] Published to channel "${channel}". Message reached ${subscriberCount} subscribers.`);
+
+    // ตอบกลับ n8n ว่าได้รับข้อมูลเรียบร้อยแล้ว
     return NextResponse.json({
       success: true,
-      message: "Response received successfully",
-      processedResponse: response,
-      timestamp: new Date().toISOString()
+      message: "Response received and published to Redis successfully",
+      subscriberCount: subscriberCount
     });
 
   } catch (error) {
-    console.error("n8n response error:", error);
+    console.error("[n8n-response] Error:", error);
     return NextResponse.json(
       {
         success: false,
@@ -48,4 +62,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-
