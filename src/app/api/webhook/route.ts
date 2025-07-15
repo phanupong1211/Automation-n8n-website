@@ -139,18 +139,18 @@ export async function GET(request: NextRequest) {
     // ถ้าต้องการให้ GET endpoint นี้ใช้ SSE ก็ต้องนำ block นี้กลับมา
     // หากไม่ต้องการ สามารถลบส่วนนี้ทิ้งได้
     // ตัวอย่างการนำกลับมา:
-    // const responseText = "นี่คือข้อความตอบกลับจาก webhook"; // อาจจะต้องกำหนดค่าตรงนี้
-    // const success = sendToSession(id, { // ใช้ id แทน sessionId ที่ไม่มีแล้ว
-    //   type: "response",
-    //   message: responseText
-    // });
-    // if (!success) {
-    //   console.log(`[Fallback] Could not send via SSE, replying HTTP`);
-    //   return NextResponse.json({
-    //     message: responseText,
-    //     useSSE: false
-    //   });
-    // }
+    const responseText = "นี่คือข้อความตอบกลับจาก webhook"; // อาจจะต้องกำหนดค่าตรงนี้
+    const success = sendToSession(id, { // ใช้ id แทน sessionId ที่ไม่มีแล้ว
+       type: "response",
+       message: responseText
+     });
+     if (!success) {
+       console.log(`[Fallback] Could not send via SSE, replying HTTP`);
+       return NextResponse.json({
+         message: responseText,
+         useSSE: false
+       });
+     }
 
     const response = pendingResponses.get(id);
 
