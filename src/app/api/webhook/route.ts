@@ -6,6 +6,8 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export async function POST(request: NextRequest) {
   try {
+
+    console.log(`[DEBUG] Secret Key from Render Environment is: "${process.env.WEBHOOK_SECRET}"`);
     // --- ส่วนที่เพิ่มเข้ามาเพื่อ DEBUG ---
     const rawBody = await request.text();
     console.log('--- Raw Body received by Next.js ---');
