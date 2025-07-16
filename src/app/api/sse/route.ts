@@ -11,13 +11,16 @@ export async function GET(request: NextRequest) {
 
   const redisUrl = process.env.REDIS_URL;
   if (!redisUrl) {
-    return new Response('Server configuration error: REDIS_URL not set', { status: 500 });
+    console.error('[SSE] REDIS_URL is not set in environment variables.');
+    return new Response('Server configuration error', { status: 500 });
   }
 
-  // ตั้งค่าให้ ioredis ทนทานขึ้นบน Free Tier
+  // ใช้การตั้งค่าแบบเดียวกับ Publisher ที่ทำงานได้สำเร็จ
   const redisSubscriber = new Redis(redisUrl, {
-    retryStrategy: (times) => Math.min(times * 100, 2000),
-    tls: { rejectUnauthorized: false }
+    retryStrategy: (times) => {
+      const delay = Math.min(times * 50, 2000);
+      return delay;
+    },
   });
 
   const channel = `sse:${sessionId}`;
@@ -26,11 +29,20 @@ export async function GET(request: NextRequest) {
     async start(controller) {
       console.log(`[SSE] Subscribing to Redis channel: ${channel}`);
       
+      redisSubscriber.on('connect', () => {
+          console.log(`[SSE] Subscriber connected to Redis for channel: ${channel}`);
+      });
+      
       redisSubscriber.on('message', (ch, message) => {
         if (ch === channel) {
           console.log(`[SSE] Message received on ${channel}`);
           controller.enqueue(`data: ${message}\n\n`);
         }
+      });
+
+      redisSubscriber.on('error', (err: Error) => {
+          console.error(`[SSE] Subscriber connection error:`, err.message);
+          // ไม่ต้อง close controller ที่นี่ เพราะ retryStrategy จะทำงาน
       });
 
       await redisSubscriber.subscribe(channel);
