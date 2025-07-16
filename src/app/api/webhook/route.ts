@@ -6,29 +6,32 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export async function POST(request: NextRequest) {
   try {
-
-    console.log(`[DEBUG] Secret Key from Render Environment is: "${process.env.WEBHOOK_SECRET}"`);
-    // --- ส่วนที่เพิ่มเข้ามาเพื่อ DEBUG ---
     const rawBody = await request.text();
-    console.log('--- Raw Body received by Next.js ---');
-    console.log(rawBody);
-    console.log('------------------------------------');
-    // --- สิ้นสุดส่วน DEBUG ---
-
-    const body = JSON.parse(rawBody);
-
     const signature = request.headers.get('x-signature');
-    if (!signature || !validateWebhookRequest(rawBody, signature).valid) {
+
+    // --- ส่วนที่แก้ไข ---
+    // 1. แปลง rawBody กลับเป็น Object ก่อน
+    const bodyObject = JSON.parse(rawBody);
+    // 2. แปลง Object นั้นกลับเป็น String อีกครั้งเพื่อสร้าง "Canonical String"
+    const canonicalString = JSON.stringify(bodyObject);
+
+    // 3. ใช้ Canonical String ในการตรวจสอบลายเซ็น
+    if (!signature || !validateWebhookRequest(canonicalString, signature).valid) {
+        console.warn('[Webhook] Signature validation failed with canonical string.');
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
+    // --- สิ้นสุดส่วนที่แก้ไข ---
     
-    const responseMessage = body.response || body.message || "ข้อความจาก n8n";
-    const sessionId = body.sessionId;
+    console.log('✅ Signature verification passed!');
+    
+    const responseMessage = bodyObject.response || bodyObject.message || "ข้อความจาก n8n";
+    const sessionId = bodyObject.sessionId;
 
     if (!sessionId) {
       return NextResponse.json({ success: false, error: "sessionId is required" }, { status: 400 });
     }
 
+    // ... โค้ดส่วนที่เหลือเหมือนเดิม ...
     const channel = `sse:${sessionId}`;
     const payload = { type: 'response', message: responseMessage };
     let published = false;
