@@ -1,3 +1,5 @@
+//reportai
+
 "use client";
 
 import { useState, useRef, useEffect } from "react";
@@ -95,7 +97,7 @@ const [sessionId] = useState(() => {
     setIsLoading(true);
 
     try {
-      const res = await fetch("/api/chatreport", {
+      const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
