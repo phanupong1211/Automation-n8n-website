@@ -1,22 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
 import { redisPublisher } from "@/lib/redis";
-// เราไม่จำเป็นต้องใช้ validateWebhookRequest ในเวอร์ชันนี้
-// import { validateWebhookRequest } from "@/lib/webhook-security";
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export async function POST(request: NextRequest) {
   try {
     const rawBody = await request.text();
-    const body = JSON.parse(rawBody);
+    const body = JSON.parse(rawBody);
 
-const signature = request.headers.get('x-signature');
-
-
-console.log('✅ Signature verification passed!');
-    
+    console.log('✅ Signature check bypassed. Proceeding to publish...');
+    
     const responseMessage = body.response || body.message || "ข้อความจาก n8n";
     const sessionId = body.sessionId;
+
+    // --- LOG ที่เพิ่มเข้ามา ---
+    console.log("--- AI Response Received ---");
+    console.log(`[Session: ${sessionId}] AI responds: "${responseMessage}"`);
+    console.log("----------------------------");
+    // --- สิ้นสุด LOG ---
 
     if (!sessionId) {
       return NextResponse.json({ success: false, error: "sessionId is required" }, { status: 400 });
@@ -24,19 +25,19 @@ console.log('✅ Signature verification passed!');
 
     const channel = `sse:${sessionId}`;
     const payload = { type: 'response', message: responseMessage };
-    let published = false;
+    let published = false;
 
     for (let i = 0; i < 3; i++) {
-      try {
-        const subCount = await redisPublisher.publish(channel, JSON.stringify(payload));
-        console.log(`✅ [Attempt ${i+1}] Published to Redis. Subscribers: ${subCount}`);
-        published = true;
-        break;
-      } catch (e) {
-        console.warn(`[Attempt ${i+1}] Failed to publish:`, e instanceof Error ? e.message : e);
-        if (i < 2) await sleep(500);
-      }
-    }
+      try {
+        const subCount = await redisPublisher.publish(channel, JSON.stringify(payload));
+        console.log(`✅ [Attempt ${i+1}] Published to Redis. Subscribers: ${subCount}`);
+        published = true;
+        break;
+      } catch (e) {
+        console.warn(`[Attempt ${i+1}] Failed to publish:`, e instanceof Error ? e.message : e);
+        if (i < 2) await sleep(500);
+      }
+    }
 
     if (!published) throw new Error(`Failed to publish after 3 attempts.`);
     return NextResponse.json({ success: true });

@@ -7,26 +7,30 @@ export async function POST(request: NextRequest) {
   let sessionId = "";
 
   try {
-    // 1. รับ workflow type จาก request
     const { message, history, sessionId: clientSessionId, workflow } = await request.json();
     userMessage = message || "";
     sessionId = clientSessionId || `session_${Date.now()}`;
+
+    // --- LOG ที่เพิ่มเข้ามา ---
+    console.log("--- User Message Received ---");
+    console.log(`[Session: ${sessionId}] User says: "${userMessage}"`);
+    console.log("-----------------------------");
+    // --- สิ้นสุด LOG ---
 
     if (!userMessage) {
       return NextResponse.json({ error: "Message is required" }, { status: 400 });
     }
 
-    // 2. เลือก n8n URL ที่ถูกต้องจาก Environment Variable
+    // ... โค้ดที่เหลือเหมือนเดิม ...
     let targetWorkflowUrl;
     if (workflow === "report") {
         targetWorkflowUrl = process.env.N8N_REPORT_WORKFLOW_URL;
     } else {
-        // ค่าเริ่มต้นคือ "team"
         targetWorkflowUrl = process.env.N8N_TEAM_WORKFLOW_URL;
     }
 
     if (!targetWorkflowUrl) {
-        throw new Error(`Workflow URL for type "${workflow}" is not defined in environment variables.`);
+        throw new Error(`Workflow URL for type "${workflow}" is not defined.`);
     }
 
     try {
@@ -40,7 +44,7 @@ export async function POST(request: NextRequest) {
 
       const signature = createSignatureHeader(payload);
       
-      const webhookResponse = await fetch(targetWorkflowUrl, { // <-- 3. ใช้ URL ที่เลือก
+      const webhookResponse = await fetch(targetWorkflowUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json", "x-signature": signature },
         body: payload,
