@@ -1,11 +1,6 @@
 {
   "/(marketing)/page": "app/(marketing)/page.js",
-  "/api/assets/recent/route": "app/api/assets/recent/route.js",
-  "/api/assets/route": "app/api/assets/route.js",
-  "/api/progress/route": "app/api/progress/route.js",
-  "/dashboard/asset/[kind]/[tag]/page": "app/dashboard/asset/[kind]/[tag]/page.js",
-  "/dashboard/asset/page": "app/dashboard/asset/page.js",
-  "/dashboard/page": "app/dashboard/page.js",
+  "/(marketing)/reviews/page": "app/(marketing)/reviews/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
   "/login/page": "app/login/page.js"
 }

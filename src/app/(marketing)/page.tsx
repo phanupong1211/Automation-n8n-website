@@ -1,11 +1,52 @@
-"use client";
+﻿"use client";
 
-import { HeroSection } from '@/components/(marketing)/HeroSection';
-import { AboutSection } from '@/components/(marketing)/AboutSection';
-import { ExperienceSection } from '@/components/(marketing)/ExperienceSection';
-import { ContactSection } from '@/components/(marketing)/ContactSection';
+import dynamic from "next/dynamic";
+import { SectionSkeleton } from "@/components/(marketing)/SectionSkeletons";
 
-//ลบ export default
+const HeroSection = dynamic(
+  () =>
+    import("@/components/(marketing)/HeroSection").then((mod) => ({
+      default: mod.HeroSection,
+    })),
+  {
+    ssr: true,
+    loading: () => <SectionSkeleton variant="hero" id="home" />,
+  }
+);
+
+const AboutSection = dynamic(
+  () =>
+    import("@/components/(marketing)/AboutSection").then((mod) => ({
+      default: mod.AboutSection,
+    })),
+  {
+    ssr: true,
+    loading: () => <SectionSkeleton id="about" variant="content" />,
+  }
+);
+
+const ExperienceSection = dynamic(
+  () =>
+    import("@/components/(marketing)/ExperienceSection").then((mod) => ({
+      default: mod.ExperienceSection,
+    })),
+  {
+    ssr: true,
+    loading: () => <SectionSkeleton id="experience" variant="cards" />,
+  }
+);
+
+const ContactSection = dynamic(
+  () =>
+    import("@/components/(marketing)/ContactSection").then((mod) => ({
+      default: mod.ContactSection,
+    })),
+  {
+    ssr: true,
+    loading: () => <SectionSkeleton id="contact" variant="content" />,
+  }
+);
+
 export default function Home() {
   return (
     <main className="min-h-screen flex flex-col">

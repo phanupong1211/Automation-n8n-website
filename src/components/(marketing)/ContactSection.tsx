@@ -1,15 +1,17 @@
-"use client";
+﻿"use client";
 
 import { Mail, Phone, MapPin, Github, Linkedin, MessageCircle } from "lucide-react";
-import {  useRef } from "react"; //useState,
-import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 
-//ลบ export default
 export function ContactSection() {
-//  const [message, setMessage] = useState("");
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const shouldReduceMotion = useReducedMotion();
+
+  const baseAnimate = isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 };
+  const safeAnimate = shouldReduceMotion ? { opacity: 1 } : baseAnimate;
 
   return (
     <section
@@ -19,9 +21,9 @@ export function ContactSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.6 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, y: 50 }}
+          animate={safeAnimate}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
@@ -34,11 +36,10 @@ export function ContactSection() {
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12">
-          {/* LEFT: Contact Box */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            initial={shouldReduceMotion ? false : { opacity: 0, x: -50 }}
+            animate={safeAnimate}
+            transition={{ duration: 0.6, delay: shouldReduceMotion ? 0 : 0.2, ease: "easeOut" }}
             className="bg-white dark:bg-gray-800 rounded-lg p-8 shadow-lg space-y-8"
           >
             <div className="flex items-start space-x-4">
@@ -112,11 +113,10 @@ export function ContactSection() {
             </div>
           </motion.div>
 
-          {/* RIGHT: AI Chat Prompt */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            initial={shouldReduceMotion ? false : { opacity: 0, x: 50 }}
+            animate={safeAnimate}
+            transition={{ duration: 0.6, delay: shouldReduceMotion ? 0 : 0.4, ease: "easeOut" }}
             className="w-full p-8 bg-gray-800 rounded-lg shadow-lg text-center"
           >
             <div className="flex flex-col items-center justify-center mb-6">
@@ -133,12 +133,12 @@ export function ContactSection() {
             </div>
 
             <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={shouldReduceMotion ? undefined : { scale: 1.05 }}
+              whileTap={shouldReduceMotion ? undefined : { scale: 0.95 }}
               onClick={() => {
                 const chatButton = document.querySelector(
                   '[aria-label="Toggle chat"]'
-                ) as HTMLButtonElement;
+                ) as HTMLButtonElement | null;
                 if (chatButton) chatButton.click();
               }}
               className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium py-4 px-6 rounded-lg transition-all duration-200 flex items-center justify-center shadow-lg hover:shadow-xl"

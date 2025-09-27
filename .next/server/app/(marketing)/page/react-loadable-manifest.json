@@ -1,1 +1,30 @@
-{}
+{
+  "[project]/src/components/(marketing)/ContactSection.tsx [app-client] (ecmascript, next/dynamic entry)": {
+    "id": "[project]/src/components/(marketing)/ContactSection.tsx [app-client] (ecmascript, next/dynamic entry)",
+    "files": [
+      "static/chunks/_a77b2e24._.js",
+      "static/chunks/src_components_(marketing)_ContactSection_tsx_6f73c702._.js"
+    ]
+  },
+  "[project]/src/components/(marketing)/ExperienceSection.tsx [app-client] (ecmascript, next/dynamic entry)": {
+    "id": "[project]/src/components/(marketing)/ExperienceSection.tsx [app-client] (ecmascript, next/dynamic entry)",
+    "files": [
+      "static/chunks/_64474920._.js",
+      "static/chunks/src_components_(marketing)_ExperienceSection_tsx_6f73c702._.js"
+    ]
+  },
+  "[project]/src/components/(marketing)/AboutSection.tsx [app-client] (ecmascript, next/dynamic entry)": {
+    "id": "[project]/src/components/(marketing)/AboutSection.tsx [app-client] (ecmascript, next/dynamic entry)",
+    "files": [
+      "static/chunks/src_components_(marketing)_AboutSection_tsx_8a38e978._.js",
+      "static/chunks/src_components_(marketing)_AboutSection_tsx_6f73c702._.js"
+    ]
+  },
+  "[project]/src/components/(marketing)/HeroSection.tsx [app-client] (ecmascript, next/dynamic entry)": {
+    "id": "[project]/src/components/(marketing)/HeroSection.tsx [app-client] (ecmascript, next/dynamic entry)",
+    "files": [
+      "static/chunks/src_components_(marketing)_HeroSection_tsx_177d7232._.js",
+      "static/chunks/src_components_(marketing)_HeroSection_tsx_6f73c702._.js"
+    ]
+  }
+}
